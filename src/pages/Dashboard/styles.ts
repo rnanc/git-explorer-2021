@@ -28,9 +28,12 @@ export const ButtonPesquisar = styled(Button)`
 `;
 
 export const Users = styled.div`
-  margin-top: 80px;
+  margin-top: 30px;
   max-width: 700px;
+  display:flex;
+  flex-direction: row;
   a {
+    margin-top: 16px;
     background: #fff;
     border-radius: 5px;
     width: 100%;
@@ -38,14 +41,24 @@ export const Users = styled.div`
     display: block;
     text-decoration: none;
     display: flex;
+    flex: 2;
     align-items: center;
     transition: transform 0.4s;
     &:hover {
       transform: translate(10px);
+      h3 {
+        color: #3f51b5;
+      }
     }
     & + a {
-      margin-top: 16px;
+      margin-left: 16px;
+      flex: 1;
     }
+    h3 {
+    text-decoration: none;
+    font-size: 18px;
+    color: #a8a8b3;
+  }
   }
   img {
     width: 64px;
