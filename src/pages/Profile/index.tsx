@@ -43,12 +43,12 @@ const Profile: React.FC = () => {
   return (
     <Container>
       {loading
-        ? <CircularProgress style={{ flex: 1 }} size={75} />
+        ? <CircularProgress size={75} />
         : userRepos && userRepos.length > 0
           ? (
             <>
               <Link to="/">
-                <ChevronLeft />
+                <ChevronLeft fontSize="large" />
               </Link>
               <Avatar src={userRepos[0].owner.avatar_url} />
               <HeaderContainer>
@@ -59,7 +59,11 @@ const Profile: React.FC = () => {
                   </Link>
                 </HeaderItems>
                 <HeaderItems>
-                  <h3>{userRepos[0].owner.login}</h3>
+                  <h3>
+                    User:
+                    {' '}
+                    {userRepos[0].owner.login}
+                  </h3>
                 </HeaderItems>
               </HeaderContainer>
               <Repos>

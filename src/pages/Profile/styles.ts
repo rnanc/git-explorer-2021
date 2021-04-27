@@ -7,9 +7,9 @@ export const Container = styled.div`
   flex-direction: column;
   a {
     align-self: flex-start;
-    transition: transform 0.4s;
+    transition: transform 0.6s;
     &:hover {
-      transform: translateX(-10px);
+      color: #000
     }
   }
 `;
