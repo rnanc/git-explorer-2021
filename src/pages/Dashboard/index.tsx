@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, SearchRounded } from '@material-ui/icons';
+import {
+  ChevronRight, SearchRounded, Star,
+} from '@material-ui/icons';
 import { CircularProgress } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +24,7 @@ interface User {
 
 const Dashboard: React.FC = () => {
   const [users, setUsers] = useState<User[]>(() => {
-    const storageUsers = localStorage.getItem('@GithubExplorer2021::users');
+    const storageUsers = localStorage.getItem('@GithubExplorer2021:users');
     if (storageUsers) {
       return JSON.parse(storageUsers);
     }
@@ -30,19 +32,25 @@ const Dashboard: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState<string>('');
-  const alerta = (): any => toast.error('Nome não encontrado !');
+  const alerta = (msg: string): any => toast.error(msg);
 
   useEffect(() => {
-    localStorage.setItem('@GithubExplorer2021::users', JSON.stringify(users));
+    localStorage.setItem('@GithubExplorer2021:users', JSON.stringify(users));
   }, [users]);
 
   const handleAddUser = useCallback(() => {
     setLoading(true);
     api.get(`users/${login}`).then((response) => {
+      const contains = users.filter((user) => user.login === response.data.login);
+      if (contains.length !== 0) {
+        setLoading(false);
+        setLogin('');
+        return alerta('Nome já adicionado !');
+      }
       setUsers([...users, response.data]);
       setLogin('');
       setLoading(false);
-    }).catch(() => { alerta(); setLoading(false); setLogin(''); });
+    }).catch(() => { alerta('Nome não encontrado !'); setLoading(false); setLogin(''); });
   }, [users, login]);
   return (
     <Container>
@@ -53,8 +61,8 @@ const Dashboard: React.FC = () => {
           Pesquisar
         </ButtonPesquisar>
       </SearchContainer>
-      <Users>
-        {users.map((user) => (
+      {users.map((user) => (
+        <Users>
           <Link
             key={user.name}
             to={`/${user.login}`}
@@ -68,8 +76,22 @@ const Dashboard: React.FC = () => {
             </div>
             <ChevronRight />
           </Link>
-        ))}
-      </Users>
+          <Link
+            key={user.name}
+            to={`/${user.login}`}
+          >
+            <Star />
+            <div>
+              <h3>
+                Repositórios favoritos de
+                {' '}
+                {user.name}
+              </h3>
+            </div>
+            <ChevronRight />
+          </Link>
+        </Users>
+      ))}
       <ToastContainer
         position="top-right"
         autoClose={5000}
