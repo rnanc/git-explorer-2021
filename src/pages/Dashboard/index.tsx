@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, SearchRounded } from '@material-ui/icons';
 import { CircularProgress } from '@material-ui/core';
@@ -21,10 +21,20 @@ interface User {
 }
 
 const Dashboard: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>(() => {
+    const storageUsers = localStorage.getItem('@GithubExplorer2021::users');
+    if (storageUsers) {
+      return JSON.parse(storageUsers);
+    }
+    return [];
+  });
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState<string>('');
   const alerta = (): any => toast.error('Nome não encontrado !');
+
+  useEffect(() => {
+    localStorage.setItem('@GithubExplorer2021::users', JSON.stringify(users));
+  }, [users]);
 
   const handleAddUser = useCallback(() => {
     setLoading(true);
@@ -47,7 +57,7 @@ const Dashboard: React.FC = () => {
         {users.map((user) => (
           <Link
             key={user.name}
-            to={`/users/${user.login}/repos`}
+            to={`/${user.login}`}
           >
             <img
               src={user.avatar_url}
