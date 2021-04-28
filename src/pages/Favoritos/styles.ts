@@ -64,6 +64,11 @@ export const HeaderItems = styled.div`
 export const Repos = styled.div`
   margin-top: 80px;
   max-width: 700px;
+  img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+  }
   a {
     background: #fff;
     border-radius: 5px;
