@@ -82,7 +82,14 @@ const Profile: React.FC = () => {
               </Repos>
             </>
           )
-          : <h1>Não foi encontrado repositórios para esta conta</h1> }
+          : (
+            <>
+              <Link to="/">
+                <ChevronLeft fontSize="large" />
+              </Link>
+              <h1>Não foi encontrado repositórios públicos para esta conta</h1>
+            </>
+          )}
     </Container>
   );
 };
