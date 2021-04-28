@@ -53,7 +53,7 @@ const Profile: React.FC = () => {
               <Avatar src={userRepos[0].owner.avatar_url} />
               <HeaderContainer>
                 <HeaderItems>
-                  <Link to="/">
+                  <Link to={`/${params.user}/starred`}>
                     Repositórios Favoritos
                     <Star color="secondary" />
                   </Link>
