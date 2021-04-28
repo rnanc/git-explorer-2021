@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Star,
   ChevronLeft,
@@ -33,12 +35,14 @@ const Profile: React.FC = () => {
   const [userRepos, setUserRepos] = useState<UserRepos[]>();
   const { params } = useRouteMatch<RepositoryParams>();
   const [loading, setLoading] = useState(true);
+  const alerta = (msg: string): any => toast.error(msg);
+  const history = useHistory();
 
   useEffect(() => {
     api.get(`/users/${params.user}/repos`).then((response) => {
       setUserRepos(response.data);
       setLoading(false);
-    });
+    }).catch(() => { alerta('Usuário não encontrado, em instantes você será redirecionado para página inicial.'); setTimeout(() => { history.push('/'); }, 5000); });
   }, [params.user]);
   return (
     <Container>
@@ -90,6 +94,17 @@ const Profile: React.FC = () => {
               <h1>Não foi encontrado repositórios públicos para esta conta</h1>
             </>
           )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 };
