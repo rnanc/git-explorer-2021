@@ -74,6 +74,7 @@ const Profile: React.FC = () => {
                   >
                     <div>
                       <strong>{repo.name}</strong>
+                      <h3>{repo.description}</h3>
                     </div>
                     <ChevronRight />
                   </a>
