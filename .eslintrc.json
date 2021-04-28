@@ -22,6 +22,7 @@
       "@typescript-eslint"
   ],
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
     "consistent-return": "off",
     "react/jsx-pascal-case":"off",
     "no-nested-ternary":"off",
