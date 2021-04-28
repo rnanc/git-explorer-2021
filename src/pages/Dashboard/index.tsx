@@ -62,9 +62,9 @@ const Dashboard: React.FC = () => {
         </ButtonPesquisar>
       </SearchContainer>
       {users.map((user) => (
-        <Users>
+        <Users key={user.avatar_url}>
           <Link
-            key={user.name}
+            key={user.login}
             to={`/${user.login}`}
           >
             <img
@@ -78,7 +78,7 @@ const Dashboard: React.FC = () => {
           </Link>
           <Link
             key={user.name}
-            to={`/${user.login}`}
+            to={`/${user.login}/starred`}
           >
             <Star />
             <div>
