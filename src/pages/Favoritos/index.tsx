@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import {
   ChevronLeft,
   ChevronRight,
 } from '@material-ui/icons';
 import { CircularProgress } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
 import {
   Container,
   HeaderContainer,
   HeaderItems,
   Repos,
 } from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../services/api';
 
 interface RepositoryParams {
@@ -30,12 +32,14 @@ const Favoritos: React.FC = () => {
   const [userFav, setUserFav] = useState<UserFav[]>();
   const { params } = useRouteMatch<RepositoryParams>();
   const [loading, setLoading] = useState(true);
+  const alerta = (msg: string): any => toast.error(msg);
+  const history = useHistory();
 
   useEffect(() => {
     api.get(`/users/${params.login}/starred`).then((response) => {
       setUserFav(response.data);
       setLoading(false);
-    });
+    }).catch(() => { alerta('Usuário não encontrado, em instantes você será redirecionado para página inicial.'); setTimeout(() => { history.push('/'); }, 5000); });
   }, [params.login]);
   return (
     <Container>
@@ -84,6 +88,17 @@ const Favoritos: React.FC = () => {
               <h1>Não foi encontrado repositórios favoritados para esta conta</h1>
             </>
           )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 };
