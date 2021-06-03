@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <HeaderTitle>Git Explorer 2021</HeaderTitle>
       <SearchContainer>
-        <InputPesquisa value={login} onChange={(e: React.ChangeEvent<HTMLInputElement>):void => setLogin(e.target.value)} id="outlined-basic" label="Pesquisar" variant="outlined" />
+        <InputPesquisa value={login} onChange={(e: React.ChangeEvent<HTMLInputElement>):void => setLogin(e.target.value)} id="outlined-basic" label="Digite o usuário" variant="outlined" />
         <ButtonPesquisar onClick={handleAddUser} endIcon={!loading ? <SearchRounded /> : <CircularProgress size={25} color="inherit" />} variant="contained" color="primary">
           Pesquisar
         </ButtonPesquisar>
